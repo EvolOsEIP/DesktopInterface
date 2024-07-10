@@ -9,6 +9,7 @@ class MyWindow : public Gtk::Window {
 
   private:
     void on_button_clicked();
+    bool on_key_pressed(GdkEventKey *event);
     Gtk::Button m_button;
 };
 
