@@ -3,21 +3,19 @@
 #include <gtkmm.h>
 
 #define CSS_PROVIDER "../css/styles.css"
+#define GLADE_PATH "../resources/glade/Window.glade"
 
-class MyWindow : public Gtk::Window {
+class MyWindow : public Gtk::ApplicationWindow {
   public:
-    MyWindow();
-    ~MyWindow();
+    MyWindow(BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);
+    virtual ~MyWindow();
 
-  private:
+  protected:
     void on_button_clicked();
     bool on_key_pressed(GdkEventKey *event);
-    Gtk::Box _box;
-    Gtk::Box _box_bis;
 
-    Gtk::Box _container;
-    Gtk::Button _box_one_btn;
-    Gtk::Button _box_two_btn;
+    Gtk::Box *_box;
+    Gtk::Button *_btn;
 
 };
 
