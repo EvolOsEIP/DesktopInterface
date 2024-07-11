@@ -1,11 +1,9 @@
 #include "Window.hpp"
 
-MyWindow::MyWindow() :
-  _box_one_btn("Box 1"),
-  _box_two_btn("Box 2"),
-  _container(Gtk::ORIENTATION_VERTICAL),
-  _box(Gtk::ORIENTATION_HORIZONTAL),
-  _box_bis(Gtk::ORIENTATION_HORIZONTAL)
+MyWindow::MyWindow(BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder) :
+  Gtk::ApplicationWindow(object),
+  _btn(nullptr),
+  _box(nullptr)
 {
 
   // set the window
@@ -14,35 +12,26 @@ MyWindow::MyWindow() :
 
 
   // button actions
-  _box_one_btn.signal_clicked().connect(sigc::mem_fun(*this, &MyWindow::on_button_clicked));
-  _box_two_btn.signal_clicked().connect(sigc::mem_fun(*this, &MyWindow::on_button_clicked));
-
   // mouse event
   this->signal_key_press_event().connect(sigc::mem_fun(*this, &MyWindow::on_key_pressed));
 
+  builder->get_widget("lamorkitue", _btn);
+  builder->get_widget("box", _box);
 
-  // box management
-  _box.pack_start(_box_one_btn);
-  _box_bis.pack_start(_box_two_btn);
-  _container.pack_start(_box);
-  _container.pack_start(_box_bis);
+  if (!_btn || !_box) {
+    std::cerr << "Can not load elements" << std::endl;
+    exit(84);
+  }
 
-  add(_container);
-
-  // css part
-
-  auto cssProvider = Gtk::CssProvider::create();
-  cssProvider->load_from_path(CSS_PROVIDER);
-
-  auto screen = Gdk::Screen::get_default();
-  Gtk::StyleContext::add_provider_for_screen(screen, cssProvider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+  Gtk::Widget *parent = _btn->get_parent();
+  if (parent)
+    _box->remove(*_btn);
 
 
-  _box_two_btn.set_name("blue-box");
-  _box_one_btn.set_name("red-box");
+  _box->pack_end(*_btn);
 
-  // display
-  _container.show_all();
+  add(*_box);
+  show_all();
 }
 
 void MyWindow::on_button_clicked()
