@@ -3,7 +3,7 @@
 #include <gtkmm.h>
 
 #define CSS_PROVIDER "../css/styles.css"
-#define GLADE_PATH "../resources/glade/Window.glade"
+#define GLADE_PATH "../resources/glade/Window.xml"
 
 class MyWindow : public Gtk::ApplicationWindow {
   public:
