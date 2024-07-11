@@ -1,0 +1,15 @@
+#red-box {
+  background-image: image(red);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+#blue-box {
+  background-image: image(blue);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
